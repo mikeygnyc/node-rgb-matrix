@@ -1,15 +1,19 @@
-var utils = require('../utils/utils')
-const gsap = require('gsap')
-var CRender = require('../utils/render')
-const Matter = require("matter-js");
+import Konva from 'konva';
+import { gsap } from 'gsap';
+import * as Matter from 'matter-js';
+import utils from '../utils/utils';
+import CRender from '../utils/render';
+import type { LedMatrixInstance } from 'rpi-led-matrix';
 
-demo = {
+type Stage = Konva.Stage;
+
+const demo = {
   
   /**
    * Simple Demo to clear the matrix display
    * @param {*} rgbmatrix 
    */
-  d0: function (rgbmatrix) {
+  d0: function (rgbmatrix: LedMatrixInstance) {
     rgbmatrix.clear().sync()
   },
 
@@ -17,7 +21,7 @@ demo = {
    * Simple Demo to show a circle and rect 
    * using the RGBMatrix APIs
    */
-  d1: async function (rgbmatrix) {
+  d1: async function (rgbmatrix: LedMatrixInstance) {
 
     rgbmatrix
       .clear() // clear the display
@@ -43,9 +47,9 @@ demo = {
    * @param {*} rgbmatrix 
    * @param {*} stage 
    */
-  d2: async function (rgbmatrix, stage) {
-    var layers = utils.getLayers(stage)
-    var simpleText = new Konva.Text({
+  d2: async function (rgbmatrix: LedMatrixInstance, stage: Stage) {
+    const layers = utils.getLayers(stage)
+    const simpleText = new Konva.Text({
       x: stage.width() / 2,
       y: 15,
       text: 'Simple Text',
@@ -66,14 +70,14 @@ demo = {
    * Advanced Demo showcasing GSAP animation capabilities
    *  on the RGBMAtrix. Uses Node canvas for Drawing shapes
    */
-  d3: async function (rgbmatrix, stage) {
-    var layers = utils.getLayers(stage)
-    var ctx = layers[0].getContext();
+  d3: async function (rgbmatrix: LedMatrixInstance, stage: Stage) {
+    const layers = utils.getLayers(stage)
+    const ctx = layers[0].getContext();
     ctx.fillStyle = "blue";
     let position = { x: 0, y: 0 };
     let style = { color: "red" }
     //gsap.gsap.registerPlugin(CSSPlugin)
-    gsap.gsap.to(position, {
+    gsap.to(position, {
       x: 40,
       y: 40,
       duration: 10,
@@ -89,7 +93,7 @@ demo = {
 
       }
     });
-    gsap.gsap.to(style, {
+    gsap.to(style, {
       color: 'blue',
       duration: 10,
       repeat: 2,
@@ -107,9 +111,9 @@ demo = {
    * @param {*} rgbmatrix 
    * @param {*} stage 
    */
-  d4: async function (rgbmatrix, stage) {
-    var layers = utils.getLayers(stage)
-    var rect1 = new Konva.Rect({
+  d4: async function (rgbmatrix: LedMatrixInstance, stage: Stage) {
+    const layers = utils.getLayers(stage)
+    const rect1 = new Konva.Rect({
       x: 0,
       y: 0,
       width: 30,
@@ -119,7 +123,7 @@ demo = {
       strokeWidth: 1,
     });
 
-    var oval = new Konva.Ellipse({
+    const oval = new Konva.Ellipse({
       x: stage.width() / 2,
       y: stage.height() / 2,
       radiusX: 20,
@@ -141,10 +145,10 @@ demo = {
    * @param {*} rgbmatrix 
    * @param {*} stage 
    */
-  d5: async function (rgbmatrix, stage) {
+  d5: async function (rgbmatrix: LedMatrixInstance, stage: Stage) {
     rgbmatrix.clear().sync()
-    var layers = utils.getLayers(stage)
-    var rect = new Konva.Rect({
+    const layers = utils.getLayers(stage)
+    const rect = new Konva.Rect({
       x: 5,
       y: 2,
       width: 30,
@@ -156,7 +160,7 @@ demo = {
     });
 
     layers[0].add(rect);
-    var tween = new Konva.Tween({
+    const tween = new Konva.Tween({
       node: rect,
       duration: 5,
       x: 40,
@@ -183,20 +187,20 @@ demo = {
    * @param {*} rgbmatrix 
    * @param {*} stage 
    */
-  d6: async function (rgbmatrix, stage) {
-    var layers = utils.getLayers(stage)
+  d6: async function (rgbmatrix: LedMatrixInstance, stage: Stage) {
+    const layers = utils.getLayers(stage)
 
-    var Engine = Matter.Engine,
+    const Engine = Matter.Engine,
       Render = CRender,
       Runner = Matter.Runner,
       Bodies = Matter.Bodies,
       Composite = Matter.Composite;
 
-    var engine = Engine.create();
+    const engine = Engine.create();
     Engine.clear(engine);
 
     // create a renderer
-    var render = Render.create({
+    const render = Render.create({
       canvas: layers[0].getNativeCanvasElement(),
       engine: engine,
       
@@ -208,20 +212,20 @@ demo = {
     });
 
     // create two boxes and a ground
-    var wbodies = []
-    for(var i=0; i<10; i++){
-    var boxA = Bodies.rectangle(40, 0, 8, 8, {
-      render: {
-         fillStyle: 'red',
-         strokeStyle: 'blue',
-         lineWidth: 0.5
+    const wbodies = []
+    for (let i = 0; i < 10; i++) {
+      const boxA = Bodies.rectangle(40, 0, 8, 8, {
+        render: {
+          fillStyle: 'red',
+          strokeStyle: 'blue',
+          lineWidth: 0.5
+        }
+      });
+      wbodies.push(boxA)
     }
-    });
-    wbodies.push(boxA)
-  }
 
-    var boxB = Bodies.rectangle(45, 30, 10, 10);
-    var ground = Bodies.rectangle(64, 60, 128, 10, { isStatic: true })
+    const boxB = Bodies.rectangle(45, 30, 10, 10);
+    const ground = Bodies.rectangle(64, 60, 128, 10, { isStatic: true })
 
     wbodies.push(boxB)
     wbodies.push(ground)
@@ -234,7 +238,7 @@ demo = {
     Render.run(render);
 
     // create runner
-    var runner = Runner.create();
+    const runner = Runner.create();
 
     // run the engine
     Runner.run(runner, engine);
@@ -252,4 +256,4 @@ demo = {
 
 }
 
-module.exports = demo
+export default demo;

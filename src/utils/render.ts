@@ -6,11 +6,11 @@
 * @class Render
 */
 
-const Matter = require("matter-js");
+import * as Matter from "matter-js";
 
-var Render = {};
+const Render: any = {};
 
-module.exports = Render;
+export default Render;
 
 var Body = Matter.Body;
 var Common = Matter.Common;
@@ -59,12 +59,13 @@ var Mouse = Matter.Mouse;
         animFrame();    
 
     if (typeof window !== 'undefined') {
-        _requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame
-                                      || window.mozRequestAnimationFrame || window.msRequestAnimationFrame
+        const win = window as any;
+        _requestAnimationFrame = win.requestAnimationFrame || win.webkitRequestAnimationFrame
+                                      || win.mozRequestAnimationFrame || win.msRequestAnimationFrame
                                       || function(callback){ window.setTimeout(function() { callback(Common.now()); }, 1000 / 60); };
 
-        _cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame
-                                      || window.webkitCancelAnimationFrame || window.msCancelAnimationFrame;
+        _cancelAnimationFrame = win.cancelAnimationFrame || win.mozCancelAnimationFrame
+                                      || win.webkitCancelAnimationFrame || win.msCancelAnimationFrame;
     }else{
         console.log("running headless without window")
         _requestAnimationFrame = requestAnimationFrame

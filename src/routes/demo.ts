@@ -1,12 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var demoController = require('../controllers/demo')
+import express from 'express';
+import demoController from '../controllers/demo';
+
+const router = express.Router();
 
 
 router.get('/:demoId', function (req, res, next) {
     //clearInterval(intervalId);
-    var rgbmatrix = req.app.get('matrix');
-    var stage = req.app.get("stage")
+    const rgbmatrix = req.app.get('matrix');
+    const stage = req.app.get("stage");
     console.log("running demo")
     switch (req.params.demoId) {
         case '0':
@@ -43,4 +44,4 @@ router.get('/:demoId', function (req, res, next) {
     res.json({ "status": "Demo running" });
 });
 
-module.exports = router;
+export default router;
