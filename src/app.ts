@@ -88,6 +88,7 @@ const createStubMatrix = (opts: MatrixOptions): matrix.LedMatrixInstance => {
 };
 
 const createMatrix = (): matrix.LedMatrixInstance => {
+  
   if (matrix.isSupported === false) {
     console.warn("RGB Matrix addon not supported on this hardware; using stub.");
     return createStubMatrix(matrixOptions);

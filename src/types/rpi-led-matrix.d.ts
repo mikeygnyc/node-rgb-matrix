@@ -8,6 +8,8 @@ declare module 'rpi-led-matrix' {
     On?: number | string;
   };
 
+  export const isSupported: boolean;
+
   export type ChainLength = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
   export interface MatrixOptions {

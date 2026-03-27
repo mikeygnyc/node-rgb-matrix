@@ -132,3 +132,5 @@ dist
 .pnp.*
 
 sync.config.json
+_node_modules
+_package-lock.json

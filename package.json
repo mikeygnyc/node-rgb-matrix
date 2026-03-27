@@ -6,21 +6,23 @@
     "build": "tsc",
     "start": "node dist/bin/www.js",
     "start:dev": "ts-node src/bin/www.ts",
-    "build-changes": "echo 'Source will rebuild on changes' && nodemon --config nodemon.build.json",
-    "sync-changes": "echo 'Changes will be pushed to Raspberry Pi' && nodemon --config nodemon.sync.json"
+    "pre-compile-sync-changes": "echo 'Pre-Compiling' && cd pi-builder && bash ./build_and_sync.sh",
+    "sync-changes": "node sync.mjs"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
     "@types/debug": "^4.1.12",
     "@types/express": "^4.17.21",
     "@types/http-errors": "^2.0.4",
+    "@types/matter-js": "^0.20.2",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.12.12",
     "chalk": "^5.6.2",
     "nodemon": "^3.1.14",
     "rsync": "^0.6.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2"
   },
   "dependencies": {
     "canvas": "^2.11.2",
